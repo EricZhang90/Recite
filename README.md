@@ -1,21 +1,21 @@
 # Recite
-/*Recite English word for Chinese people*/
-/**
-*Client Side: 
-*	• Created Multiple GUIs for promoting user experience 
-*	• Provided register& login function and a user-defined note.
-*	• Sent and received user progress to and from server. 
-*	• Used multi-thread to load vocabulary stored in local file. 
-*	• Set a test to assistant user reciting vocabulary (displayed a vocabulary with four meanings, one of them was    
-*	  correct). 
-*Server Side: 
-*	• Integrated user progress from client side and stored the data to database.
-*	• Validated user login information. 
-*	• According to client’s requirement, analyzed records stored in database and sent analyzed data to client.
-*Database Manager: 
-*	• Connected to MySQL and handled requires from server, either retrieval or update record.
-**/
+#Recite English word for Chinese people
 
+#Client Side: 
+#	• Created Multiple GUIs for promoting user experience 
+#	• Provided register& login function and a user-defined note.
+#	• Sent and received user progress to and from server. 
+#	• Used multi-thread to load vocabulary stored in local file. 
+#	• Set a test to assistant user reciting vocabulary (displayed a vocabulary with four meanings, one of them was    
+#	  correct). 
+#Server Side: 
+#	• Integrated user progress from client side and stored the data to database.
+#	• Validated user login information. 
+#	• According to client’s requirement, analyzed records stored in database and sent analyzed data to client.
+#Database Manager: 
+#	• Connected to MySQL and handled requires from server, either retrieval or update record.
+#
+#
 /**
  * 
  * @author Eric
