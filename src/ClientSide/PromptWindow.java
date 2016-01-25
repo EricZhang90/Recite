@@ -30,8 +30,5 @@ public class PromptWindow extends JFrame{
 		comfirm.addActionListener(e->dispose());
 	}
 	
-	public static void main(String[] args) {
-		new PromptWindow("abc");
-	}
 	
 }
