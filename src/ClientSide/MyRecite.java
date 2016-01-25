@@ -90,10 +90,8 @@ public class MyRecite extends JFrame{
 					@Override
 					public void windowClosing(WindowEvent e) 
 					{ 
-						int a;
 						if(username != null)
 							updateProgress();
-							a = 1;
 					}
 				});
 		
