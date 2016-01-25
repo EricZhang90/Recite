@@ -164,6 +164,7 @@ public class MyRecite extends JFrame{
 					}
 					if(result.equals("F")){
 						new PromptWindow("Incorrect username or password");
+						login.close();
 					}
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -189,7 +190,7 @@ public class MyRecite extends JFrame{
 				
 			new Timer(1000, e->{
 				SwingUtilities.invokeLater(()->changeTime(currentSec.decrementAndGet()));
-				changeTitle();
+				SwingUtilities.invokeLater(()->changeTitle());
 				
 				if(currentSec.intValue() == 0){
 					check(null, 1);
@@ -242,7 +243,7 @@ public class MyRecite extends JFrame{
 			this.wrong++;
 		
 		currentSec.set(TOTAL_SECOND);
-		this.score.setText("  Correct: " + right + " Wrong: " + wrong);
+		SwingUtilities.invokeLater(()->score.setText("  Correct: " + right + " Wrong: " + wrong));
 		setQuestion();
 		changeTime(TOTAL_SECOND);
 	}
