@@ -22,13 +22,35 @@ public class DBManager implements Closeable{
 		init();
 	}
 	
+ /* 
+ * user profile:
+ * create table userProfile( 
+ * username char (20) primary key, 
+ * password char (40) not null, 
+ * hint char (30));
+ * 
+ * user's daily accomplishment: 
+ * create table accomplishment( 
+ * username char (20), 
+ * updateDate date, 
+ * updateTime mediumint (6) unsigned not null,
+ * correct mediumint (4) unsigned not null, 
+ * incorrect mediumint (4) unsigned not null, 
+ * currentIndex mediumint (4) unsigned not null,
+ * primary key (username, updateDate, updateTime),  
+ * FOREIGN KEY (username) references userprofile (username));
+ */	
 	public void init()
 	{
 		try {
+			/* I use MySQL, and user Information is private, so I use HOSTNAME, USERNAME 
+			 * instead of real login information
+			 * database table is showed upon.
+			 */
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://zenit.senecac.on.ca", "int322_153b06", "fpTW6548");
+			conn = DriverManager.getConnection("jdbc:mysql://HOSTNAME", "USERNAME", "PASSWORD");
 			statement = conn.createStatement();
-			statement.executeUpdate("use int322_153b06");
+			statement.executeUpdate("use DATABASE");
 		} catch (SQLException e) {
 			System.err.println("Cannot connect to database");
 			e.printStackTrace();
