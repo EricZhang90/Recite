@@ -1,5 +1,5 @@
 # Recite
-Recite English word for Chinese people
+//Recite English word for Chinese people
 /**
 *Client Side: 
 *	• Created Multiple GUIs for promoting user experience 
