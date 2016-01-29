@@ -23,8 +23,6 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import ServerSide.Statistics;
-
 public class MyRecite extends JFrame{
 	private static final int TOTAL_SECOND = 20;  
 	private JLabel labelTimer = new JLabel("Time");
@@ -56,8 +54,8 @@ public class MyRecite extends JFrame{
 	private JButton openNote = new JButton("Open Note");
 	
 	//Client:
-	private Client client;
-	private String username = null;
+	protected Client client;
+	protected String username = null;
 	private JButton login = new JButton("Login");
 	private JButton btnToLastIndex = new JButton("To last index");
 	private JButton btnStatistic = new JButton("Statistic");
@@ -106,7 +104,7 @@ public class MyRecite extends JFrame{
 		});
 		
 		
-		openNote.addActionListener(e ->new VBook(username).start());
+		openNote.addActionListener(e ->new VBook(this.username).start());
 		
 		optionA.addActionListener(e ->check(optionA.getText(), index));
 		
@@ -147,32 +145,33 @@ public class MyRecite extends JFrame{
 
 	private void login() 
 	{
-		client = new Client();
-		LoginWindow login = new LoginWindow(client);
-		
-		Thread check = new Thread(()->{
-			if (login != null){
-				try {
-					String result = client.getBufferedReader().readLine();
-					if(result.equals("T")){
-						username = login.getUsername();
-						login.close();
-						btnStatistic.setEnabled(true);
-						btnToLastIndex.setEnabled(true);
-						addToNote.setEnabled(true);
-						openNote.setEnabled(true);
+		if(this.username == null){
+			client = new Client();
+			LoginWindow login = new LoginWindow(client);
+			
+			Thread check = new Thread(()->{
+				if (login != null){
+					try {
+						String result = client.getBufferedReader().readLine();
+						if(result.equals("T")){
+							username = login.getUsername();
+							login.close();
+							btnStatistic.setEnabled(true);
+							btnToLastIndex.setEnabled(true);
+							addToNote.setEnabled(true);
+							openNote.setEnabled(true);
+						}
+						if(result.equals("F")){
+							new PromptWindow("Incorrect username or password");
+						}
+					} catch (Exception e1) {
+						e1.printStackTrace();
 					}
-					if(result.equals("F")){
-						new PromptWindow("Incorrect username or password");
-						login.close();
-					}
-				} catch (Exception e1) {
-					e1.printStackTrace();
 				}
-			}
-		});
-		
-		check.start();
+			});
+			
+			check.start();
+		}
 	}
 	
 	public void start()
@@ -190,7 +189,7 @@ public class MyRecite extends JFrame{
 				
 			new Timer(1000, e->{
 				SwingUtilities.invokeLater(()->changeTime(currentSec.decrementAndGet()));
-				SwingUtilities.invokeLater(()->changeTitle());
+				changeTitle();
 				
 				if(currentSec.intValue() == 0){
 					check(null, 1);
@@ -243,7 +242,7 @@ public class MyRecite extends JFrame{
 			this.wrong++;
 		
 		currentSec.set(TOTAL_SECOND);
-		SwingUtilities.invokeLater(()->score.setText("  Correct: " + right + " Wrong: " + wrong));
+		this.score.setText("  Correct: " + right + " Wrong: " + wrong);
 		setQuestion();
 		changeTime(TOTAL_SECOND);
 	}
