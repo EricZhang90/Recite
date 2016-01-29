@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -34,16 +36,17 @@ public class MainServer extends JFrame implements Runnable{
 	public void init()
 	{
 		setTitle("Sever");
-        	setSize(400, 300);
-        	add(new JScrollPane(new JList<String>(dialog) ), BorderLayout.CENTER);
-        	setVisible(true);
-        	setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(400, 300);
+        add(new JScrollPane(new JList<String>(dialog) ), BorderLayout.CENTER);
+        setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
 	// Server
 	public final static int DEFAULT_PORT = 8040;
 	protected ServerSocket server;
 	Thread thread;
+	java.util.List<MyConnection> conections = Collections.synchronizedList(new ArrayList<MyConnection>());
 	
 	public void serverListen()
 	{
@@ -69,22 +72,21 @@ public class MainServer extends JFrame implements Runnable{
 			try {
 				Socket sock = server.accept();
 				processMsg("Accept client: " + sock.getInetAddress() + ", prot: " + sock.getPort());
-				new MyConnection(sock, this);
+				conections.add(new MyConnection(sock, this));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 	
-    	public void processMsg(String msg)
-    	{
-        	String currentTime = LocalDateTime.now().toString();
-        	String revisedTime = currentTime.substring(0, currentTime.lastIndexOf("."));
-        	SwingUtilities.invokeLater(()->dialog.addElement(revisedTime + ":  " + msg) );
-    	}
+	public void processMsg(String msg)
+    {
+        String currentTime = LocalDateTime.now().toString();
+        String revisedTime = currentTime.substring(0, currentTime.lastIndexOf("."));
+        SwingUtilities.invokeLater(()->dialog.addElement(revisedTime + ":  " + msg) );
+    }
 	
-	public static void main(String[] args) 
-	{
+	public static void main(String[] args) {
 		new MainServer();
 	}
 }
@@ -117,31 +119,30 @@ class MyConnection extends Thread{
 	}
 	
 	@Override
-	public void run() 
-	{
+	public void run() {
 		while(true){
-			try {
-				String clientQuest = in.readLine();
-				if(clientQuest == null) return;
+		try {
+			String clientQuest = in.readLine();
+			if(clientQuest == null) return;
 
-				String requestType = clientQuest.substring(0, clientQuest.indexOf("$"));
-				String detail = clientQuest.substring(clientQuest.indexOf("$") + 1);
+			String requestType = clientQuest.substring(0, clientQuest.indexOf("$"));
+			String detail = clientQuest.substring(clientQuest.indexOf("$") + 1);
 			
-				String currentPackge = this.getClass().getPackage().toString();
-				String packageName = currentPackge.substring(currentPackge.indexOf(" ")+1) + ".";
+			String currentPackge = this.getClass().getPackage().toString();
+			String packageName = currentPackge.substring(currentPackge.indexOf(" ")+1) + ".";
 			
-				RequestHandle requestHandle = (RequestHandle) Class.forName( packageName + requestType).newInstance();
-				server.processMsg("Require type: " + requestType);
-				requestHandle.init();
-				requestHandle.process(detail, out);
-				server.processMsg("Require completed\n");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-				System.err.println("cannot create class");
-				e.printStackTrace();
-			}
+			RequestHandle requestHandle = (RequestHandle) Class.forName( packageName + requestType).newInstance();
+			server.processMsg("Require type: " + requestType);
+			requestHandle.init();
+			requestHandle.process(detail, out);
+			server.processMsg("Require completed\n");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			System.err.println("cannot create class");
+			e.printStackTrace();
+		}
 		}
 	}
 	
