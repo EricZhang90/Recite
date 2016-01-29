@@ -1,5 +1,5 @@
 # Recite
-/**
+
 *Recite English word for Chinese people
 
 *Client Side: 
