@@ -162,6 +162,7 @@ public class MyRecite extends JFrame{
 							openNote.setEnabled(true);
 						}
 						if(result.equals("F")){
+							login.close();
 							new PromptWindow("Incorrect username or password");
 						}
 					} catch (Exception e1) {
