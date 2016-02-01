@@ -26,7 +26,8 @@
  *  @version 1.3.1
  *  2016/01/31
  *  1, add encrypt class to protect password
- *  2, add php scripts to provide registration and reset password services
+ *  2, link 'register' and 'forget password?' buttons to php
+ *  3, add php scripts to provide registration and reset password services
  *  
  *  @version 1.3
  *  2016/01/24
