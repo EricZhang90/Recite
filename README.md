@@ -1,26 +1,27 @@
 # Recite
 
 * Recite English word for Chinese people
+* 
 * Client Side (Java):
 * Created Multiple GUIs to enable a more user-friendly experience
-* Used multi-thread to load local data files, and used Atomic objects for rendering the program
-  thread-safe
-* Set a test which displayed a vocabulary with four meanings, one of them was correct.
-* Provided a register& login window and a user-defined note where user can custom (add and delete words) 
-  his/her own note
-* Sent and received user progress to and from server via socket
+* Used multithreading to load local data files, and used Atomic objects for rendering the program thread-safe
+* Designed a test mode which displayed a vocabulary term with four answer choices, of which only one was correct.
+* Provided a register & login window for user history and authentication as well as an optional field for a user to add 
+*  question-specific educational notes, and the ability for the user to create, update and delete custom words/terms 
+* Sent and received user progress to and from server via socket 
+* 
 * Website (HTML, PHP):
-* Provided register page where PHP validated registration information and create user account in MySQL
-*Projects (cont’d)   
-* Provided reset password service which sent a specific web address to user’s email and change password
-* Server Side Java):        
-* Collected user connections by encapsulating array list into synchronized list in order to prevent 
-                               threads safety
+* Register page used PHP validated registration information and created the user account in MySQL
+* Provided a password-reset service which sent a specific web address to user’s email and change password
+*
+* Server Side (Java):
+* Collected user connections by encapsulating array list into synchronized list in order to ensure thread safety
 * Validated user login information
-* stored user progress in the specified database
-* Handled client’s request by reflection and according to the request, analyzed and sent specific data to the client
+* Stored user progress in the specified database
+* Handled client request by reflection and according to the request, analyzed and sent specific data to the client
 * Database Manager (Java, SQL): 
-* Connected to MySQL and handled requires from server, either retrieving or updating record
+* Connected to MySQL and handled requests from the server for either retrieving or updating records
+
 
 *
 
