@@ -49,13 +49,13 @@
  * 
  * user profile:
  * create table userProfile( 
- * username char (20) primary key, 
+ * username char (50) primary key, 
  * password char (40) not null, 
  * hint char (30));
  * 
  * user's daily accomplishment: 
  * create table accomplishment( 
- * username char (20), 
+ * username char (50), 
  * updateDate date, 
  * updateTime mediumint (6) unsigned not null,
  * correct mediumint (4) unsigned not null, 
