@@ -23,15 +23,6 @@
  * 
  * @author Eric
  * 
-
- 
-
- 
-
-
- 
-
-
  *  @version 1.3.1
  *  2016/01/31
  *  1, add encrypt class to protect password
