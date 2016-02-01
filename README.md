@@ -1,21 +1,27 @@
 # Recite
 
-*Recite English word for Chinese people
+* Recite English word for Chinese people
+* Client Side (Java):
+* Created Multiple GUIs to enable a more user-friendly experience
+* Used multi-thread to load local data files, and used Atomic objects for rendering the program
+  thread-safe
+* Set a test which displayed a vocabulary with four meanings, one of them was correct.
+* Provided a register& login window and a user-defined note where user can custom (add and delete words) 
+  his/her own note
+* Sent and received user progress to and from server via socket
+* Website (HTML, PHP):
+* Provided register page where PHP validated registration information and create user account in MySQL
+*Projects (cont’d)   
+* Provided reset password service which sent a specific web address to user’s email and change password
+* Server Side Java):        
+* Collected user connections by encapsulating array list into synchronized list in order to prevent 
+                               threads safety
+* Validated user login information
+* stored user progress in the specified database
+* Handled client’s request by reflection and according to the request, analyzed and sent specific data to the client
+* Database Manager (Java, SQL): 
+* Connected to MySQL and handled requires from server, either retrieving or updating record
 
-*Client Side: 
-*	 Created Multiple GUIs for promoting user experience 
-*	 Provided register& login function and a user-defined note.
-*	 Sent and received user progress to and from server. 
-*	 Used multi-thread to load vocabulary stored in local file. 
-*	 Set a test to assistant user reciting vocabulary (displayed a vocabulary with four meanings, one of them was    
-*	  correct). 
-*Server Side: 
-*	 Integrated user progress from client side and stored the data to database.
-*  Validated user login information. 
-*	 According to client’s requirement, analyzed records stored in database and sent analyzed data to client.
-*Database Manager: 
-*	 Connected to MySQL and handled requires from server, either retrieval or update record.
-*
 *
 
 #
