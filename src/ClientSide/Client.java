@@ -51,7 +51,7 @@ public class Client extends JFrame implements Closeable {
 	
 	public void validate(String username, String password)
 	{
-		String require = "Validation$" + username + "$" + password;
+		String require = "Validation$" + username + "$" + Encrypt.md5(password);
 		out.println(require);
 		out.flush();
 	}
