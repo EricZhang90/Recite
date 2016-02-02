@@ -4,10 +4,10 @@ class MyDB {
     private $link;
     
     public function __construct(){
-        $host = "db-mysql.zenit";
-        $username = "int322_153b06";
-        $password = "fpTW6548";
-        $database = "int322_153b06";
+        $host = "HOSTNAME";
+        $username = "USERNAME";
+        $password = "PASSWORD";
+        $database = "DATABASE";
         
         $this->link = mysqli_connect($host, $username, $password, $database)
             or die ("Couldn't connect to database <br/>");
