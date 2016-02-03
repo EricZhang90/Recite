@@ -1,35 +1,29 @@
 package ClientSide;
 
-import java.awt.BorderLayout;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 
-public class Client extends JFrame implements Closeable {
-	JButton btnStart = new JButton("Start");
-	JButton btnConnect = new JButton("Connect");
-	DefaultListModel<String> defaultListModle = new DefaultListModel<>();
-	JList<String> dialog = new JList<>(defaultListModle);
-	JButton show = new JButton("Show");
-	boolean isLogged = false;
-	
+/**
+ * 
+ * @author eric
+ * used to sent client's requests to server
+ */
+
+public class Client implements Closeable {	
 	public Client()
 	{
 		init();
 	}
 	
+	/**
+	 * made connection
+	 */
 	public void init()
 	{
 		try {
@@ -48,7 +42,15 @@ public class Client extends JFrame implements Closeable {
 	BufferedReader in;
 	PrintWriter out;
 	
-	
+	/**
+	 * this method is used to sent valiadation request to server
+	 * 
+	 * it concatenated username and password by delimiter $ sign
+	 * added request type at the beginning of above string.
+	 * then sent the string qs request
+	 * @param username 
+	 * @param password
+	 */
 	public void validate(String username, String password)
 	{
 		String require = "Validation$" + username + "$" + Encrypt.md5(password);
@@ -56,6 +58,10 @@ public class Client extends JFrame implements Closeable {
 		out.flush();
 	}
 	
+	/**
+	 * 
+	 * asked server send back password
+	 */
 	public void getProgress()
 	{
 		String require = "GetProgress$eric";
@@ -63,6 +69,10 @@ public class Client extends JFrame implements Closeable {
 		out.flush();
 	}
 	
+	/**
+	 * sent update request to server
+	 * @param query update SQL
+	 */
 	public void update(String query)
 	{
 		String request = "UpdateProgress$" + query;
@@ -70,20 +80,32 @@ public class Client extends JFrame implements Closeable {
 		out.flush();
 	}
 	
+	/**
+	 * specified username and asked server to
+	 * return current index for the user
+	 * 
+	 * @param username
+	 */
 	public void getCurrentIndex(String username)
 	{
 		String request = "GetCurrentIndex$" + username;
-		//System.out.println("Client->getCurrentIndex, request::" + request);
-		out.flush();
 		out.println(request);
 		out.flush();
 	}
 	
+	/**
+	 * 
+	 * @return return a buffer by which main program(MyRecite) 
+	 * is able to get feedback from server
+	 */
 	public BufferedReader getBufferedReader()
 	{
 		return in;
 	}
 	
+	/**
+	 * disconection
+	 */
 	@Override
 	public void close() throws IOException 
 	{
