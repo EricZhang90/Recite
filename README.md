@@ -30,6 +30,10 @@
  * 
  * @author Eric
  * 
+ * @version 1.3.2 2016/02/03
+ * 1, add comment
+ * 2, delete redundant code
+ * 
  *  @version 1.3.1
  *  2016/01/31
  *  1, add encrypt class to protect password
