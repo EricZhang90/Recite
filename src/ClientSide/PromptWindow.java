@@ -8,6 +8,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * @author eric
+ * a simple GUI that received a message then display it.
+ * had a button to close itself
+ */
+
 public class PromptWindow extends JFrame{
 	JLabel lbMsg = new JLabel("");
 	JButton comfirm = new JButton("Ok");
