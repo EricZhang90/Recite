@@ -23,6 +23,14 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+/**
+ * 
+ * @author eric
+ * main function
+ * created main GUI, loaded data file and provided entry for sub-windows
+ * set a test
+ * made connection if necessary
+ */
 public class MyRecite extends JFrame{
 	private static final int TOTAL_SECOND = 20;  
 	private JLabel labelTimer = new JLabel("Time");
@@ -36,9 +44,6 @@ public class MyRecite extends JFrame{
 	private int right = 0;
 	private int wrong = 0;
 	private JLabel score = new JLabel("  Correct: " + right + " / Wrong: " + wrong);
-	
-	//reset
-	//private JButton reset = new JButton("Reset Score");
 	
 	//options
 	private JButton optionA = new JButton("A");
@@ -60,6 +65,10 @@ public class MyRecite extends JFrame{
 	private JButton btnToLastIndex = new JButton("To last index");
 	private JButton btnStatistic = new JButton("Statistic");
 	
+	/**
+	 * GUI initialization and created buttons' functionality, 
+	 * 
+	 */
 	public void GUIInit()
 	{
 		setSize(600, 250);
@@ -83,6 +92,7 @@ public class MyRecite extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		
+		//updated user progress while uesr exiting
 		addWindowListener( 
 				new WindowAdapter(){
 					@Override
@@ -93,6 +103,7 @@ public class MyRecite extends JFrame{
 					}
 				});
 		
+		//add current word in to client's note
 		addToNote.addActionListener(e->{
 			String writeFilePath = username + ".dat";
 			try {
@@ -103,9 +114,11 @@ public class MyRecite extends JFrame{
 			}
 		});
 		
-		
+		//open client's note
 		openNote.addActionListener(e ->new VBook(this.username).start());
 		
+		
+		// four funtions below were used confirm user's choice
 		optionA.addActionListener(e ->check(optionA.getText(), index));
 		
 		optionB.addActionListener(e ->check(optionB.getText(), index));
@@ -114,12 +127,14 @@ public class MyRecite extends JFrame{
 		
 		optionD.addActionListener(e ->check(optionD.getText(), index));
 		
+		// call function login
 		login.addActionListener(e->{
 			if(username == null){
 				login();
 			}
 			});
 		
+		// skiped to the last index user looked
 		btnToLastIndex.addActionListener(e->{
 			client.getCurrentIndex(username);
 			try {
@@ -135,14 +150,25 @@ public class MyRecite extends JFrame{
 			}
 		});
 		
+		// open statistic window
 		btnStatistic.addActionListener(e->new Thread(){public void run() {new Statistics(client);}}.start());
 		
+		// functions, including open note, Add word to note, return to the last word user looked and open statisitc window,
+		// are not available before user successfully long in.
 		openNote.setEnabled(false);
 		addToNote.setEnabled(false);
 		btnToLastIndex.setEnabled(false);
 		btnStatistic.setEnabled(false);
 	}
 
+	/**
+	 * checked wether or not user is logged in
+	 * if yes, do nothing.
+	 * if not, make conntion with server and open login window
+	 * meanwhile, started threading to listen feedback from server.
+	 * if the message is "T", which meant user login information is valid, close login widow then enable rest funtions
+	 * otherwise, do nothing but close login window
+	 */
 	private void login() 
 	{
 		if(this.username == null){
@@ -175,6 +201,11 @@ public class MyRecite extends JFrame{
 		}
 	}
 	
+	/**
+	 * started threading to read local data file,
+	 * statred timer reset it to 20 if it goes down to zero,
+	 * user has 20 second to choose a answer
+	 */
 	public void start()
 	{
 		GUIInit();
@@ -200,6 +231,10 @@ public class MyRecite extends JFrame{
 		}).start();
 	}
 	
+	/**
+	 * randomly chose three meaning, and combine the correct answer into four potions
+	 * randomly plase them.
+	 */
 	public void setQuestion()
 	{
 		
@@ -235,6 +270,12 @@ public class MyRecite extends JFrame{
 		index++;
 	}
 	
+	
+	/**
+	 * checked if user selected correct answer, increated variable right if so, otherwise increated variable wrong 
+	 * @param answer the answer user selcted
+	 * @param index the index pointing to correct meaning
+	 */
 	public void check(String answer, int index)
 	{
 		if(meaningList.get(index-1).equals(answer))
@@ -248,6 +289,9 @@ public class MyRecite extends JFrame{
 		changeTime(TOTAL_SECOND);
 	}
 	
+	/**
+	 * display current time in title
+	 */
 	public void changeTitle()
 	{
 		LocalDateTime currentTime = LocalDateTime.now();
@@ -258,11 +302,22 @@ public class MyRecite extends JFrame{
 				);
 	}
 	
+	/**
+	 * 
+	 * @param i the second to which label current second was changed
+	 */
 	public void changeTime(int i)
 	{
 		this.labelTimer.setText("  Time remain: " + i +"sec(s)");
 	}
 	
+	/**
+	 * loaded vocaburay
+	 * 
+	 * @param fileName location of the data file containing vocabulary
+	 * @param charset  type of Unicode
+	 * @throws IOException 
+	 */
 	public void readWords(String fileName, String charset) throws IOException
 	{
 		try(BufferedReader reader =
@@ -275,10 +330,7 @@ public class MyRecite extends JFrame{
 			while ((line = reader.readLine()) != null){
 				if(line.length() == 0) 
 					continue;
-				/*
-				Pattern pattern = Pattern.compile("\t");
-				String[] tokens = pattern.split(line);
-				*/
+	
 				String[] tokens = Pattern.compile("\t").split(line);
 				wordList.add(tokens[0]);
 				meaningList.add(tokens[1]);
@@ -286,6 +338,11 @@ public class MyRecite extends JFrame{
 		}
 	}
 	
+	/**
+	 * 	update user current progress,
+	 *  the information containing current date, time and index
+	 *  set current date and time to string type
+	 */
 	public void updateProgress()
 	{
 			LocalDateTime defaulTime = LocalDateTime.now();
@@ -294,7 +351,7 @@ public class MyRecite extends JFrame{
 			int min = defaulTime.getMinute();
 			int sec = defaulTime.getSecond();
 
-			String sHour = hour < 10 ? "0" + Integer.toString(hour) : Integer.toString(hour);
+			String sHour = Integer.toString(hour);
 			String sMin = min < 10 ? "0" + Integer.toString(min) : Integer.toString(min);
 			String sSec = sec < 10 ? "0" + Integer.toString(sec) : Integer.toString(sec);
 			
