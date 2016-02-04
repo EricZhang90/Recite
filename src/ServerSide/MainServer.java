@@ -18,21 +18,37 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
+/**
+ * 
+ * @author eric
+ * each severlet should be implement this interface
+ */
 interface RequestHandle{
 	void init();
 	void process(String detail, PrintWriter out);
 }
 
+/**
+ * 
+ * @author eric
+ * Main server which created connection between server and client
+ */
 public class MainServer extends JFrame implements Runnable{
 	// GUI
 	DefaultListModel<String> dialog = new DefaultListModel<>();
 	
+	/**
+	 * inlized GUI and start to listen to port
+	 */
 	public MainServer() 
 	{
 		init();
 		serverListen();
 	}
 	
+	/**
+	 * GUI inilization
+	 */
 	public void init()
 	{
 		setTitle("Sever");
@@ -48,6 +64,9 @@ public class MainServer extends JFrame implements Runnable{
 	Thread thread;
 	java.util.List<MyConnection> conections = Collections.synchronizedList(new ArrayList<MyConnection>());
 	
+	/**
+	 * listen to port and created thread if no thread running
+	 */
 	public void serverListen()
 	{
 		while(true){
@@ -65,6 +84,9 @@ public class MainServer extends JFrame implements Runnable{
 		}
 	}
 	
+	/**
+	 * accepted connection from client
+	 */
 	@Override
 	public void run() 
 	{
@@ -79,6 +101,10 @@ public class MainServer extends JFrame implements Runnable{
 		}
 	}
 	
+	/**
+	 * display message
+	 * @param msg the message to be displayed in server's GUI
+	 */
 	public void processMsg(String msg)
     {
         String currentTime = LocalDateTime.now().toString();
@@ -86,17 +112,31 @@ public class MainServer extends JFrame implements Runnable{
         SwingUtilities.invokeLater(()->dialog.addElement(revisedTime + ":  " + msg) );
     }
 	
+	/**
+	 * lanuch server
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		new MainServer();
 	}
 }
 
+/**
+ * 
+ * @author eric
+ * recieved request from client, and dynamically create request handle by relection
+ */
 class MyConnection extends Thread{
 	Socket sock;
 	MainServer server;
 	BufferedReader in;
 	PrintWriter out;
 	
+	/**
+	 * initlized input and output buffer.
+	 * @param sock client 
+	 * @param server main server
+	 */
 	public MyConnection(Socket sock, MainServer server) 
 	{
 		this.sock = sock;
@@ -118,6 +158,10 @@ class MyConnection extends Thread{
 		this.start();
 	}
 	
+	/**
+	 * permanently received request from client and add each connection to list (it may be more useful in future)
+	 * handled request by created corresponding object
+	 */
 	@Override
 	public void run() {
 		while(true){
