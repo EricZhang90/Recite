@@ -24,6 +24,8 @@ if($_POST){
     $isValid = false;
   }  
   
+  
+  // if is valid, encrtpt password then connect to database and create accout in user projile and user progress
   if($isValid){
     include_once("php/MyDB.php");
     $DBManager = new MyDB();
