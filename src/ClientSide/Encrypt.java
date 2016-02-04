@@ -4,6 +4,15 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+
+/**
+ * provide a way to encrypt password by md5
+ * get this code from http://www.mkyong.com/java/java-md5-hashing-example/
+ * Thank mkyong for sharing.
+ * 
+ * @author mkyong 
+ *
+ */
 public class Encrypt {
 	public static String md5(String input) {
         
@@ -29,7 +38,4 @@ public class Encrypt {
 
         return md5;
     }
-	public static void main(String[] args) {
-		System.out.println(md5("123"));
-	}
 }
