@@ -1,10 +1,12 @@
 package ServerSide;
 
 import java.io.PrintWriter;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
+/**
+ * 
+ * @author eric
+ * a servlet which sent the last index of user read
+ */
 public class GetCurrentIndex implements RequestHandle{
 	DBManager conn;
 	
@@ -14,6 +16,9 @@ public class GetCurrentIndex implements RequestHandle{
 		conn = new DBManager();	
 	}
 	
+	/**
+	 * @param detail username
+	 */
 	@Override
 	public void process(String detail, PrintWriter out) 
 	{
