@@ -1,15 +1,18 @@
 <?php
-    // save old password to session
+    // save old password  and username to session
     if($_GET['password']){
         session_start();
         $_SESSION['oldPassword'] = $_GET['password'];
+        $_SESSION['username'] = $_GET['username'];
     }
 
+    // connect ot database and change password according old password and username
     if(isset($_POST['newPassword'])){
         include_once("MyDB.php");
 
         $myDB = new MyDB();
-        $myDB->modifyDB("update userProfile set password ='" . md5($_POST['newPassword']) . "' where password ='" . $_SESSION['oldPassword'] . "'");
+        $myDB->modifyDB("update userProfile set password ='" . md5($_POST['newPassword']) . "' where password ='" . $_SESSION['oldPassword'] 
+                        . "' and username='" . $_SESSION['username'] . "';");
         session_destroy();
         header("Location: login.php");
     }
