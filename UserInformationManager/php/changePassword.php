@@ -1,4 +1,5 @@
 <?php
+    // save old password to session
     if($_GET['password']){
         session_start();
         $_SESSION['oldPassword'] = $_GET['password'];
