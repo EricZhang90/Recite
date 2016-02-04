@@ -4,7 +4,8 @@
 
         $myDB = new MyDB();
         $data = $myDB->getValue("select password from userProfile where username = '" . $_POST['email'] . "';" );
-        $message = "To change password, visit: https://zenit.senecac.on.ca/~int322_153b06/php/changePassword.php?password=" . $data['password'];
+        $message = "To change password, visit: THE PHP PAGE UNDER THE ROOT: Recite/UserInformationManager/php/changePassword.php?password=" 
+                    . $data['password'] . "&username=" . $_POST['email'];
         mail($_POST['email'], "Password" , $message);
         header("Location: login.php");
     }
