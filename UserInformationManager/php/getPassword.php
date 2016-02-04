@@ -2,6 +2,7 @@
     if(isset($_POST['email'])){
         include_once("MyDB.php");
 
+        // get password according to username and sent to user's emaill
         $myDB = new MyDB();
         $data = $myDB->getValue("select password from userProfile where username = '" . $_POST['email'] . "';" );
         $message = "To change password, visit: THE PHP PAGE UNDER THE ROOT: Recite/UserInformationManager/php/changePassword.php?password=" 
