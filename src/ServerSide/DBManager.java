@@ -12,6 +12,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * 
+ * @author eric
+ * database manager, connect to MySQL, handled query
+ */
 public class DBManager implements Closeable{
 	private Connection conn;
 	private Statement statement;
@@ -40,6 +45,10 @@ public class DBManager implements Closeable{
  * primary key (username, updateDate, updateTime),  
  * FOREIGN KEY (username) references userprofile (username));
  */	
+ 
+ 	/**
+	 * initlized drive and connect to database
+	 */
 	public void init()
 	{
 		try {
@@ -60,6 +69,10 @@ public class DBManager implements Closeable{
 		}	
 	}
 	
+	/**
+	 * update table
+	 * @param query 
+	 */
 	public void update(String query)
 	{
 		try {
@@ -70,6 +83,11 @@ public class DBManager implements Closeable{
 		}
 	}
 	
+	/**
+	 * basing on username, got password by select statment 
+	 * @param username
+	 * @return password
+	 */
 	public String validate(String username)
 	{
 		String password = "";
@@ -85,6 +103,11 @@ public class DBManager implements Closeable{
 		return password;
 	}
 	
+	/**
+	 * get user progress and analyzed data
+	 * @param username
+	 * @return a list which contains a map where keys and values are paired
+	 */
 	public List<Map<String, String>> getData(String username)
 	{
 		List<Map<String, String>> datas = new LinkedList<>();
@@ -110,6 +133,11 @@ public class DBManager implements Closeable{
 		return datas;
 	}
 	
+	/**
+	 * according to username, return current index by a select satatment
+	 * @param username
+	 * @return current index
+	 */
 	public int getCurrentIndex(String username){
 		int currentIndex = 0;
 		String query = "select currentIndex "
@@ -129,6 +157,10 @@ public class DBManager implements Closeable{
 		return currentIndex;
 	}
 	
+		
+	/**
+	 * close conncetion
+	 */
 	@Override
 	public void close() throws IOException 
 	{
