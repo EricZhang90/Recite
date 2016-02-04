@@ -4,6 +4,11 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 
+ * @author eric
+ * a servlet that sent all progresses to client basing on username
+ */
 public class GetProgress implements RequestHandle{
 	
 	DBManager conn;
@@ -14,6 +19,13 @@ public class GetProgress implements RequestHandle{
 		conn = new DBManager();	
 	}
 	
+	
+	/**
+	 * 
+	 * created a list of map to received data from DBManager
+	 * enumerated list, by which sent progress to client one by one
+	 * @param detail a string containing username
+	 */
 	@Override
 	public void process(String detail, PrintWriter out) 
 	{
