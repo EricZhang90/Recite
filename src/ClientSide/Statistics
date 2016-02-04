@@ -10,12 +10,20 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
-import ClientSide.Client;
-
+/**
+ * 
+ * @author eric
+ *	a window showing user each progress
+ */
 public class Statistics extends JFrame{
 	DefaultListModel<String> dialog = new DefaultListModel<>();
 	Client client;
 	
+	
+	/**
+	 * 	initialized GUI and make connection
+	 * @param client the connection between client and server
+	 */
 	public Statistics(Client client)
 	{
 		init();
@@ -24,6 +32,9 @@ public class Statistics extends JFrame{
 		getData();
 	}
 	
+	/**
+	 * GUI initilization
+	 */
 	public void init()
 	{
 		setTitle("Statistics");
@@ -33,6 +44,9 @@ public class Statistics extends JFrame{
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 	
+	/**
+	 * get progress from server and displayed data line by line
+	 */
 	public void getData()
 	{
 		BufferedReader in = client.getBufferedReader();
