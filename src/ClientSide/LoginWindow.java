@@ -72,9 +72,9 @@ public class LoginWindow extends JFrame {
 			client.validate(username, password);
 		});
 		
-		btnReg.addActionListener(e->openWebPage("https://zenit.senecac.on.ca/~int322_153b06/"));
+		btnReg.addActionListener(e->openWebPage("THE PHP PAGE UNDER ROOT: /UserInformationManager/index.php"));
 		
-		btnResetPw.addActionListener(e->openWebPage("https://zenit.senecac.on.ca/~int322_153b06/php/getPassword.php"));
+		btnResetPw.addActionListener(e->openWebPage("THE PHP PAGE UNDER ROOT: /UserInformationManager/php/getPassword.php"));
 	}
 
 	/**
